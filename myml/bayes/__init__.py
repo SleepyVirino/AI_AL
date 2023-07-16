@@ -1,1 +1,2 @@
 from .classifier import GaussianBayesClassfier
+from .classifier import NaiveBayesClassifier
