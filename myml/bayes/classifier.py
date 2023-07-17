@@ -46,7 +46,7 @@ class NaiveBayesClassifier():
             posterior_probs[i] = self.class_priors[i]
             for j in range(len(x)):
                 if self.discrete_features:
-                    posterior_probs[i] *= self.likelihood[c][j].get([x[j]],1)
+                    posterior_probs[i] *= self.likelihood[c][j].get([x[j]],FLT_EPSILON)
                 else:
                     posterior_probs[i] *= self.gaussian_pdf(x[j], self.likelihood[c][j]['mean'], self.likelihood[c][j]['variance'])
         return self.classes[np.argmax(posterior_probs)]

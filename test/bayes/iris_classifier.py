@@ -25,10 +25,8 @@ if __name__ == "__main__":
     # 创建自己手写的高斯正态贝叶斯分类器，并进行训练
     classifier = GaussianBayesClassfier()
     classifier.fit(X_train, y_train)
-
     # 进行预测
     y_pred = classifier.predict(X_test)
-
     # 计算准确率
     accuracy = accuracy_score(y_test, y_pred)
     print("GaussianBayesClassfier(myml)(class_prob_eq) accuracy:", accuracy)
@@ -44,10 +42,8 @@ if __name__ == "__main__":
 
     # 创建sklearn朴素贝叶斯高斯分类器对象
     gnb = GaussianNB()
-
     # 使用训练数据拟合模型
     gnb.fit(X_train, y_train)
-
     # 使用模型进行预测
     y_pred = gnb.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
@@ -55,12 +51,9 @@ if __name__ == "__main__":
 
     # 创建自己的朴素贝叶斯高斯分类器对象
     gnb = NaiveBayesClassifier()
-
     gnb.fit(X_train, y_train)
-
     # 在测试集上进行预测
     y_pred = gnb.predict(X_test)
-
     # 计算准确率
     accuracy = accuracy_score(y_test, y_pred)
     print("NaiveBayesClassifier(myml) accuracy:", accuracy)

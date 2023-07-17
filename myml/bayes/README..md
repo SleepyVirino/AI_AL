@@ -71,3 +71,78 @@ $D_c$表示训练集$D$中第$c$类样本组成的集合，假设这些样本独
 $$
 P(D_c|\mathbf{\theta_c})=\prod_{\mathbf{x}\in D_c}P(\mathbf{x}|\mathbf{\theta_c})
 $$
+对$\mathbf{\theta_c}$进行极大似然估计，使用对数似然
+$$
+LL(\mathbf{\theta_c})=logP(D_c|\mathbf{\theta_c})=\sum_{\mathbf{x}\in D_c}log(P(\mathbf{x}|\mathbf{\theta_c}))
+$$
+此时参数$\mathbf{\theta_c}$的极大似然估计$\mathbf{\hat{\theta_c}}$为
+$$
+\mathbf{\hat{\theta_c}}=\underset{\mathbf{\theta_c}}{argmax}LL(\mathbf{\theta_c})
+$$
+可使用两种办法来求解该问题：
+
+- 直接求解：如特征向量属性值连续时，假设概率密度函数$p(\mathbf{x}|c)\sim N(\mathbf{\mu_c},\mathbf{\sigma_c^2})$，则此时可直接解出$\mathbf{\hat{\theta_c}}=\{\mathbf{\hat{\mu_c}},\mathbf{\hat{\sigma_c^2}}\}$
+  $$
+  \mathbf{\hat{\mu_c}}=\frac{1}{|D_c|} \sum_{\mathbf{x}\in D_c}\mathbf{x}\\
+  \mathbf{\hat{\sigma_c^2}}=\frac{1}{|D_c|} \sum_{\mathbf{x}\in D_c}\mathbf(x-\hat{\mu_c})(x-\hat{\mu_c)}^T
+  $$
+
+- 通过最优化算法进行求解
+
+## 朴素贝叶斯分类器
+
+**属性条件独立性假设**：对已知类别，假设所有属性相互独立，即
+$$
+P(\mathbf{x}|c) = \prod_{i=1}^{d}P(x_i|c)
+$$
+则朴素贝叶斯分类器的表达式为：
+$$
+h_{nb}=\underset{c\in Y}{argmax}P(c|\mathbf{x})=P(c)\prod_{i=1}^{d}P(x_i|c)
+$$
+令$D_c$表示训练集$D$中第c类样本组成的集合，类先验概率
+$$
+P(c)=\frac{|D_c|}{|D|}
+$$
+对于$P(x_i|c)$，分两种情况：
+
+- 特征向量$x_i$为离散值：记$D_{c,x_i}$表示$D_c$中在第$i$个属性取值为$x_i$的样本集合，则
+
+​		
+$$
+P(x_i|c)=\frac{|D_{c,x_i}|}{|D_c|}
+$$
+
+- 特征向量$x_i$为连续值：则可假定$p(x_i|c)\sim N(\mu_{c,i},\sigma_{c,i}^2)$，其中$\mu_{c,i}$和$\sigma_{c,i}^2$分别是第$c$类样本在第$i$个属性上取值的均值和方差，则：
+
+$$
+p(x_i|c)=\frac{1}{\sqrt{2\pi\sigma_{c,i}^2}}exp(-\frac{{(x_i-\mu_{c,i})}^2}{2\sigma_{c,i}^2})
+$$
+
+**拉普拉斯平滑**：修正$P(c)$和$P(x_i|c)$，这里是因为某种类别或属性值在训练集中并未出现，则会导致这两个式子值为0，则会导致整体概率为0，显然这样是不合理的（会导致某些样本$x_i$无论无何都不会分到类别$c$中），修正之后为：
+$$
+\hat{P}(c)=\frac{|D_c|+1}{|D|+N}\\
+\hat{P}(x_i|c)=\frac{|D_{c,x_i}|+1}{|D_c|+N_i}
+$$
+其中$N$为训练集$D$中可能出现的类别数，$N_i$表示第$i$个属性可能的取值个数
+
+## 正态贝叶斯分类器
+
+特征向量服从多维正态分布，即：
+$$
+P(\mathbf{x}|c)=\frac{1}{{(2\pi)}^{\frac{1}{2}}|\mathbf{\Sigma_c}|}exp(-\frac{1}{2}(\mathbf{x}-\mathbf{\mu_c})^T\Sigma^{-1}(\mathbf{x}-\mathbf{\mu_c}))
+$$
+其中$\mathbf{\mu_c}$为类别为$c$时的均值向量，$\mathbf{\Sigma_c}$为此时的协方差矩阵
+
+并且由极大似然估计可得样本中的均值向量与协方差矩阵即为上述所需值
+
+则分类器$h_g$为：
+$$
+h_g(x)=\underset{c\in Y}{argmax}P(c|\mathbf{x})=\underset{c\in Y}{argmax}\frac{P(c)P(\mathbf{x}|c)}{P(\mathbf{x})}=\underset{c\in Y}{argmax}P(c)P(\mathbf{x}|c)
+$$
+取对数似然：
+$$
+h_g(x)=\underset{c\in Y}{argmin}(\ln(|\mathbf{\Sigma_c}|)+(\mathbf{x}-\mathbf{\mu_c})^T\Sigma^{-1}(\mathbf{x}-\mathbf{\mu_c}))-\ln(P(c))
+$$
+
+
+当数据中各个类别概率近似相等时，即$P(c)$是相等的，那么上述式子只需求前半部分即可
