@@ -13,7 +13,7 @@ y = iris.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
 
 # 创建决策树分类器对象并训练模型
-tree = DecisionTreeClassifier()
+tree = DecisionTreeClassifier(criterion='gini')
 tree.fit(X_train, y_train)
 
 # 对测试集进行预测
@@ -24,7 +24,7 @@ accuracy = accuracy_score(y_test, y_pred)
 print("准确率:", accuracy)
 
 # 创建决策树分类器对象并训练模型
-tree = myDecisionTreeClassifier()
+tree = myDecisionTreeClassifier(criterion='gain_ratio',max_depth=2)
 tree.fit(X_train, y_train)
 
 # 对测试集进行预测

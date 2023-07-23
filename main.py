@@ -1,14 +1,5 @@
-import random
+import numpy as np
 
-epoch = 10000000
-count = 0
-
-for i in range(epoch):
-    x = random.uniform(0,1)
-    y = random.uniform(0,1)
-    z = random.uniform(0,1)
-    if z*z > x*y:
-        count += 1
-
-print(count/epoch)
-print(5/9)
+a = np.array([1,2,3,4])
+b = np.array([1.1,2,3,4])
+print(any(a!=b))
