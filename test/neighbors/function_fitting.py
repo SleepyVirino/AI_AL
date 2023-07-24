@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
-from myml.tree import DecisionTreeRegressor
-# from sklearn.tree import DecisionTreeRegressor
+from myml.neighbors import KnnRegressor
+
 
 # 定义多元函数：f(x1, x2) = x1^2 + x2^2
 def multivariate_function(x1, x2):
@@ -24,7 +24,7 @@ X = np.column_stack((X1, X2))
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # 创建并训练决策树回归器
-dt_regressor = DecisionTreeRegressor()
+dt_regressor = KnnRegressor(k=1)
 dt_regressor.fit(X_train, y_train)
 
 # 预测测试集

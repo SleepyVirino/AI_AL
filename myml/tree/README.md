@@ -71,9 +71,8 @@ Email: 	d837791568yd@gmail.com
      \underset{f,t}{argmax}Gain\_ratio(D,f,t)
      $$
      
-
    - **基尼指数(CART)**
-
+   
      **基尼值**定义为
      $$
      Gini(D)=\sum_{k=1}^{|Y|}\sum_{\hat{k}\neq k}p_kp_{\hat{k}}
@@ -87,9 +86,9 @@ Email: 	d837791568yd@gmail.com
      $$
      \underset{f,t}{argmin}Gini\_index(D,f,t)
      $$
-
+   
    - **回归误差**
-
+   
      上面三个评判标准均是针对**分类树**，对于回归树，我们使用均方误差进行评判，定义如下：
      $$
      E(D) = \frac{1}{l}\sum_{i=1}^{l}(y_i-\overline{y})^2
@@ -102,13 +101,13 @@ Email: 	d837791568yd@gmail.com
      $$
      \underset{f,t}{argmax}\Delta E(D,f,t)
      $$
-
+   
    - 
-
+   
    对于上面求$argmax$或$argmin$的问题：
-
+   
    我们举简单的例子：$f(\mathbf{x})=x_k$，$v=2$，则这是我们遍历所有的属性可能所取得所有值来确定$f(\mathbf{x}),t_1$，来求解问题即可
-
+   
 3. 对样本集$\hat{D_1},\hat{D_2},...,\hat{D_v}$进行递归建立子树
 
 4. 如果不能再进行分裂，则把该节点标记为叶子节点，并存储决策结果
@@ -155,7 +154,7 @@ Email: 	d837791568yd@gmail.com
 - 每个节点有多个次分裂规则
 - 对样本$\mathbf{x}$赋予权重$w_\mathbf{x}$，数值在$0\sim1$之间，然后对于原来在个数上的相关量的计算变为在权重上的计算即可。对于缺失值的数据，训练时会进入全部的分支中，但是会按照不同分支的样本个数分配不同的权重（和为1）
 
-## 
+
 
 
 

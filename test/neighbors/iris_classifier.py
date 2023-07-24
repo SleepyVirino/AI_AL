@@ -8,8 +8,6 @@ from myml.neighbors import KnnClassifier
 
 if __name__ == "__main__":
 
-
-
     # 加载示例数据集
     iris = load_iris()
     X = iris.data
@@ -28,7 +26,7 @@ if __name__ == "__main__":
     accuracy = accuracy_score(y_test, y_pred)
     print("Accuracy:", accuracy)
 
-    classifier = KnnClassifier()
+    classifier = KnnClassifier(distance='mahala')
     classifier.fit(X_train, y_train)
 
     # 进行预测
